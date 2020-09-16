@@ -5,16 +5,18 @@ int mygetline(char line[], int maxline);
 void reverse(char string[], int len, char reversed[]);
 
 int main() {
-  /*int len;*/
-  /*char line[MAXLINE];*/
+  int len, i;
+  char line[MAXLINE];
+  char reversed[MAXLINE];
   
-  char rev[12]; 
-  char line[] = "Hello world";
-  reverse(line, 11, rev);
-  printf("%s\n", rev);
-  
-  /*while ((len = mygetline(line, MAXLINE)) > 0)*/
-      /*printf("%s", line);*/
+  while ((len = mygetline(line, MAXLINE)) > 0) {
+      line[len-1] = '\0'; // exchange '\n' for '\0', making line a string without \n at the end
+      reverse(line, len-1, reversed);
+      reversed[len-1] = '\n'; // append \n at the end again
+      reversed[len] = '\0';
+      printf("%s", reversed);
+  }
+
   return 0;
 }
 
