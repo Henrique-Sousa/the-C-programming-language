@@ -38,13 +38,12 @@ void rtrim(char line[], int len, char dest[]) {
 
   if (len == 1) return;
 
-  i = len-2;
-  if (line[len-2] == ' ' || line[len-2] == '\t') {
-    i = len-3;
-    while ((line[i] == ' ' || line[i] == '\t') && i >= 0) {
-      --i; 
-    }
+  // set i to be the last non space character
+  i = len-2;  // need to start in len-2 because line[len] == '\0' and line[len-1] == '\n'
+  while ((line[i] == ' ' || line[i] == '\t') && i >= 0) {
+    --i; 
   }
+  
   dest[i+2] = '\0';
   dest[i+1] = '\n';
   while (i >= 0) {
