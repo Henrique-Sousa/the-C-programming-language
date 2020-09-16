@@ -1,7 +1,5 @@
 #include <stdio.h>
 #define MAXLINE 1000
-#define OUT 0
-#define IN 1
 
 int mygetline(char line[], int maxline);
 void rtrim(char line[], int len, char dest[]);
