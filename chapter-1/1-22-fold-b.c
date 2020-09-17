@@ -1,3 +1,5 @@
+// this version doesn't split words in half
+
 #include <stdio.h>
 
 #define MAXLINE 1000
