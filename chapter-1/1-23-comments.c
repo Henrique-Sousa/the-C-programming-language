@@ -1,21 +1,26 @@
 #include <stdio.h>
 
 int main() {
-  int c, inslash, incomment, inasterisk;
+  int c, inquote, inslash, incomment, inasterisk;
   
-  inslash = incomment = inasterisk = 0;
+  inquote = inslash = incomment = inasterisk = 0;
 
   while ((c = getchar()) != EOF) {
     if (incomment == 0) {
-      if (inslash == 1) {
-        if (c == '*') {
-          inslash = 0;
-          incomment = 1;
+      if (inquote == 0) {
+        if (inslash == 1) {
+          if (c == '*') {
+            inslash = 0;
+            incomment = 1;
+            continue;
+          }
+        } else if (c == '/') {
+          inslash = 1;
           continue;
         }
-      } else if (c == '/') {
-        inslash = 1;
-        continue;
+        if (c == '\'') {
+          inquote = 1;
+        }
       }
       putchar(c);
     } else {
