@@ -21,6 +21,8 @@ int main() {
         if (c == '\'') {
           inquote = 1;
         }
+      } else if (c == '\'') {
+        inquote = 0;
       }
       putchar(c);
     } else {
