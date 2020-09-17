@@ -22,6 +22,7 @@ int main() {
           putchar(line[i]);
         }
         putchar('\n');
+        i++;  // skip a space
         end = i + TEXTWIDTH;
       } else {
         end--;
