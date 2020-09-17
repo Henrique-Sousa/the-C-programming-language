@@ -1,54 +1,61 @@
 #include <stdio.h>
 
 int main() {
-  int c, inquote, indoublequote, inbackslash, inslash, incomment, inasterisk;
+
+  int c, singlequoted, doublequoted, escaped, slashed, commented, asterisk;
   
-  inbackslash = indoublequote = inquote = inslash = incomment = inasterisk = 0;
+  escaped = doublequoted = singlequoted = slashed = commented = asterisk = 0;
 
   while ((c = getchar()) != EOF) {
-    if (incomment == 0) {
-      if (indoublequote == 0) {
-        if (inquote == 0) {
-          if (inslash == 1) {
+    if (commented) {
+      if (asterisk) {
+        if (c == '/') {
+          asterisk = 0;
+          commented = 0;
+        }
+      } else {
+        if (c == '*') {
+          asterisk = 1;
+        }
+      }
+    } else {
+      if (doublequoted) {
+        if (escaped) {
+          escaped = 0;
+        } else {
+          if (c == '\"') {
+            doublequoted = 0;
+          }
+          if (c == '\\') {
+            escaped = 1;
+          }    
+        } 
+      } else {
+        if (singlequoted) {
+          if (c == '\'') {
+            singlequoted = 0;
+          }
+        } else {
+          if (slashed) {
             if (c == '*') {
-              inslash = 0;
-              incomment = 1;
+              slashed = 0;
+              commented = 1;
               continue;
             }
           } else if (c == '/') {
-            inslash = 1;
+            slashed = 1;
             continue;
           }
           if (c == '\'') {
-            inquote = 1;
+            singlequoted = 1;
           }
           if (c == '\"') {
-            indoublequote = 1;
+            doublequoted = 1;
           }
-        } else if (c == '\'') {
-          inquote = 0;
         }
-      } else if (inbackslash == 0) {
-        if (c == '\"') {
-          indoublequote = 0;
-        }
-        if (c == '\\') {
-          inbackslash = 1;
-        }    
-      } else {
-        inbackslash = 0;
       }
       putchar(c);
-    } else {
-      if (inasterisk == 0) {
-        if (c == '*') {
-          inasterisk = 1;
-        }
-      } else if (c == '/') {
-        inasterisk = 0;
-        incomment = 0;
-      }
-    }
+    } 
    
   }
 
