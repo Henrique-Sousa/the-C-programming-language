@@ -36,12 +36,19 @@ int main() {
                     escaped = 1;
                 }        
             } 
+        } else if (singlequoted) {
+            if (escaped) {
+                escaped = 0;
+            } else {
+                if (c == '\'') {
+                    singlequoted = 0;
+                }
+                if (c == '\\') {
+                    escaped = 1;
+                }
+            }
         } else if (c == '\"') {
             doublequoted = 1;
-        } else if (singlequoted) {
-            if (c == '\'') {
-                singlequoted = 0;
-            }
         } else if (c == '\'') {
             singlequoted = 1;
         } else if (slashed) {
