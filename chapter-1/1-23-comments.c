@@ -28,13 +28,20 @@ int main() {
                 }        
             } 
             putchar(c);
+        } else if (singlequoted) {
+            if (escaped) {
+                escaped = 0;
+            } else {
+                if (c == '\'') {
+                    singlequoted = 0;
+                }
+                if (c == '\\') {
+                    escaped = 1;
+                }
+            }
+            putchar(c);
         } else if (c == '\"') {
             doublequoted = 1;
-            putchar(c);
-        } else if (singlequoted) {
-            if (c == '\'') {
-                singlequoted = 0;
-            }
             putchar(c);
         } else if (c == '\'') {
             singlequoted = 1;
