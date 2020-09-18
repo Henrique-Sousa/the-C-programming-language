@@ -4,18 +4,33 @@
 char stack[MAXSTACKSIZE];
 int p;
 
+int line, col, stackline, stackcol;
+
 char peek();
 void pop();
 void push(char c);
+void printlinecol();
+void printstacklinecol();
 
 int main() {
 
     int c, singlequoted, doublequoted, escaped, slashed, commented, asterisk;
-    
+
     escaped = doublequoted = singlequoted = slashed = commented = asterisk = 0;
     p = -1;
 
+    line = 1;
+    col = 0;
+
+    stackline = stackcol = -1;
+
     while ((c = getchar()) != EOF) {
+        ++col;
+        if (c == '\n') {
+            ++line;
+            col = 0;
+        }
+
         if (commented) {
             if (asterisk) {
                 if (c == '/') {
@@ -63,16 +78,24 @@ int main() {
         } else {
             if (c == '(' || c == '[' || c == '{') {
                 push((char) c);
+                stackline = line;
+                stackcol = col;
             }
             if (c == ')') {
                 if (peek() == '\0') {
                     printf(") without (\n");
+                    printstacklinecol();
+                    printlinecol();
                     return 1;
                 } else if (peek() == '[') {
                     printf("[)\n");
+                    printstacklinecol();
+                    printlinecol();
                     return 1;
                 } else if (peek() == '{') {
                     printf("{)\n");
+                    printstacklinecol();
+                    printlinecol();
                     return 1;
                 } else if (peek() == '(') {
                     pop();
@@ -81,12 +104,18 @@ int main() {
             if (c == ']') {
                 if (peek() == '\0') {
                     printf("] without [\n");
+                    printstacklinecol();
+                    printlinecol();
                     return 1;
                 } else if (peek() == '(') {
                     printf("(]\n");
+                    printstacklinecol();
+                    printlinecol();
                     return 1;
                 } else if (peek() == '{') {
                     printf("{]\n");
+                    printstacklinecol();
+                    printlinecol();
                     return 1;
                 } else if (peek() == '[') {
                     pop();
@@ -95,12 +124,18 @@ int main() {
             if (c == '}') {
                 if (peek() == '\0') {
                     printf("} without {\n");
+                    printstacklinecol();
+                    printlinecol();
                     return 1;
                 } else if (peek() == '(') {
                     printf("(}\n");
+                    printstacklinecol();
+                    printlinecol();
                     return 1;
                 } else if (peek() == '[') {
                     printf("[}\n");
+                    printstacklinecol();
+                    printlinecol();
                     return 1;
                 } else if (peek() == '{') {
                     pop();
@@ -111,6 +146,7 @@ int main() {
     }
     if (peek() != '\0') {
         printf("%c not closed\n", peek());
+        printf("at line %d, column %d\n", stackline, stackcol);
     }
     return 0;
 }
@@ -134,3 +170,9 @@ void push(char c) {
     stack[p] = c;
 }
 
+void printlinecol() {
+    printf("at line %d, column %d\n", line, col);
+}
+void printstacklinecol() {
+    printf("at line %d, column %d\n", stackline, stackcol);
+}
