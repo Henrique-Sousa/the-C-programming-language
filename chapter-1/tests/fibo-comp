@@ -20,7 +20,7 @@ static volatile void *yield_init;
  
 iterator fibonacci(int stop){
     YIELDS(int);
-    int f[] = {0, 1};
+    int f[] = {0, 1}; 
     int i;
     for(i=0; i<stop; i++){
         YIELD(f[i%2]);

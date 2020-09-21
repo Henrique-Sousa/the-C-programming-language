@@ -15,7 +15,7 @@ int main() {
   c = '/'; /* lalalala alala*/
   char s[] = "/*ksnks*/";
   for(i = 0; i < MAX_LENGTH; i++) {
-    lengths[i] = 0;
+    lengths[i] = 0; // lalsjdbs d \ / /* k fdsdn \n
   }
 
   state = OUT;
