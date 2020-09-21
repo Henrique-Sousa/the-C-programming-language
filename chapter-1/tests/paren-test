@@ -4,7 +4,7 @@
 int main() {
   int c, i;
   c = '}';
-  char s[] =  "lalala(lalal";
+  char s[] =  "lalala(lalal"; // snd  sl / \
   while (((c=getchar()) != EOF) { /* (((( */
     if (c == '\t') {
       for (i=0; i<tabstop; i++) {

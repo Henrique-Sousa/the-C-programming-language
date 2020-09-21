@@ -14,9 +14,9 @@ void printstacklinecol();
 
 int main() {
 
-    int c, singlequoted, doublequoted, escaped, slashed, commented, asterisk;
+    int c, singlequoted, doublequoted, escaped, slashed, onelinecommented, multilinecommented, asterisk;
 
-    escaped = doublequoted = singlequoted = slashed = commented = asterisk = 0;
+    escaped = doublequoted = singlequoted = slashed = onelinecommented = multilinecommented = asterisk = 0;
     p = -1;
 
     line = 1;
@@ -31,11 +31,15 @@ int main() {
             col = 0;
         }
 
-        if (commented) {
+        if (onelinecommented) {
+            if (c == '\n') {
+                onelinecommented = 0;
+            }
+        } else if (multilinecommented) {
             if (asterisk) {
                 if (c == '/') {
                     asterisk = 0;
-                    commented = 0;
+                    multilinecommented = 0;
                 }
             } else if (c == '*') {
                 asterisk = 1;
@@ -69,7 +73,10 @@ int main() {
         } else if (slashed) {
             if (c == '*') {
                 slashed = 0;
-                commented = 1;
+                multilinecommented = 1;
+            } else if (c == '/') {
+                slashed = 0;
+                onelinecommented = 1;
             } else {
                 slashed = 0;
             }
