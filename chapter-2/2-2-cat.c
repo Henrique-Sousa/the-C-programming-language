@@ -17,11 +17,12 @@ int mygetline(char s[], int lim) {
     int c, i;
 
     i = 0;
-    while(i < lim - 1) {
-        if ((c=getchar())==EOF) {
+    while(1) {
+        if (i >= lim - 1) {
             break;
-        }
-        if (c=='\n') {
+        } else if ((c=getchar())==EOF) {
+            break;
+        } else if (c=='\n') {
             break;
         }
         s[i] = c;
