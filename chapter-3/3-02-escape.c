@@ -31,5 +31,5 @@ void escape(char* s, char* t) {
                 break;
         }
     }
-    t[j+1] = '\0';
+    t[j] = '\0';
 }
