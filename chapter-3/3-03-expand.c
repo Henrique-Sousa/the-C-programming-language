@@ -3,7 +3,7 @@
 void expand(char* s1, char* s2);
 
 int main() {
-    char* range = "f-r";
+    char* range = "a-z0-9";
     char result[100];
     expand(range, result);
     printf("%s\n", result);
@@ -13,11 +13,18 @@ int main() {
 
 // handle the simplest cases like a-z, N-P, 3-8
 void expand(char* s1, char* s2) {
-    char letter;
-    int i;
+    char letter, end, s2p;
+    int i, j;
 
-    for (i = 0, letter = s1[0]; letter <= s1[2]; letter++, i++) {
-        s2[i] = letter; 
+    j = 0;
+    for (i = 0; s1[i] != '\0'; i++) {
+        if (s1[i+1] == '-') {
+            for (letter = s1[i], end = s1[i+2]; letter <= end; j++, letter++) {
+                s2[j] = letter; 
+            }
+            i+=2;
+        }
     }
-    s2[i] = '\0';
+
+    s2[j] = '\0';
 }
