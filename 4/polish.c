@@ -12,16 +12,16 @@ double pop(void);
 int main()
 {
     int type;
-    double op2 ;
+    double op1, op2;
     char s[MAXOP];
 
-    while ((type= getop(s)) != EOF) {
+    while ((type = getop(s)) != EOF) {
         switch (type) {
             case NUMBER:
                 push(atof(s));
                 break;
             case '+':
-                push (pop() + pop()) ;
+                push (pop() + pop());
                 break;
             case '*':
                 push(pop() * pop());
@@ -37,8 +37,13 @@ int main()
                 else
                     printf("error: zero divisor\n");
                 break;
+            case '%':
+                op2 = pop();
+                op1 = pop();
+                push(op1 - ((int) (op1 / op2)) * op2);
+                break;
             case '\n':
-                printf( "\t%.8g\n" , pop());
+                printf("\t%.8g\n" , pop());
                 break;
             default:
                 printf("error: unknown command %s\n" , s);
@@ -85,15 +90,15 @@ int getop(char s[])
     while ((s[0] = c = getch()) == ' ' || c == '\t')
         ;
     s[1] = '\0';
-    if ( !isdigit(c) && c !='.')
+    if (!isdigit(c) && c != '.')
         return c;       /* not a number */
     i = 0;
     if (isdigit(c))     /*collect integer part*/
         while (isdigit(s[++i] = c = getch()))
-            ;
+           ;
     if (c == '.')   /*collect fraction part*/
         while (isdigit(s[++i] = c = getch()))
-            ;
+           ;
     s[i] = '\0';
     if (c != EOF)
         ungetch (c);
